@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Book — BookShelf{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h2 style="margin-top:0">Add a Book</h2>
+
+  <form method="POST">
+    <label>Title</label><br>
+    <input name="title" required><br><br>
+
+    <label>Author</label><br>
+    <input name="author" required><br><br>
+
+    <label>Rating (1-5)</label><br>
+    <input type="number" name="rating" min="1" max="5" required><br><br>
+
+    <label>Summary</label><br>
+    <textarea name="summary" rows="5" required></textarea><br><br>
+    <label>Cover Image Filename (in /static/images/)</label><br>
+    <input name="image"><br><br>
+
+    <label>About the Author</label><br>
+  <textarea name="about_author" rows="4"></textarea><br><br>
+
+  <label>Book Summary</label><br>
+  <textarea name="book_summary" rows="6"></textarea><br><br>
+
+  <label>Discussion / Thoughts</label><br>
+  <textarea name="discussion" rows="6"></textarea><br><br>
+
+    <button type="submit">Add Book</button>
+  </form>
+</div>
+{% endblock %}

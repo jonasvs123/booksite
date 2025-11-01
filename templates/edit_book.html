@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Book — {{ book.title }}{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h2 style="margin-top:0">Edit Book</h2>
+
+  <form method="POST">
+    <label>Title</label><br>
+    <input name="title" value="{{ book.title }}" required><br><br>
+
+    <label>Author</label><br>
+    <input name="author" value="{{ book.author }}" required><br><br>
+
+    <label>Rating (1-5)</label><br>
+    <input type="number" name="rating" min="1" max="5" value="{{ book.rating }}" required><br><br>
+
+    <label>Summary</label><br>
+    <textarea name="summary" rows="5" required>{{ book.summary }}</textarea><br><br>
+    <label>Cover Image Filename (in /static/images/)</label><br>
+    <input name="image" value="{{ book.image }}"><br><br>
+    <label>About the Author</label><br>
+    <textarea name="about_author" rows="4">{{ book.about_author }}</textarea><br><br>
+
+    <label>Book Summary</label><br>
+    <textarea name="book_summary" rows="6">{{ book.book_summary }}</textarea><br><br>
+
+    <label>Discussion / Thoughts</label><br>
+    <textarea name="discussion" rows="6">{{ book.discussion }}</textarea><br><br>
+
+    <button type="submit" class="button">Save Changes</button>
+  </form>
+
+  <p style="margin-top:10px;">
+    <a href="/">← Back to all books</a>
+  </p>
+</div>
+{% endblock %}

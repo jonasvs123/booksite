@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ book.title }} — Book Reviews by Jonas{% endblock %}
+
+{% block content %}
+<div class="card">
+
+{% if book.image %}
+  <img src="/static/images/{{ book.image }}" 
+       alt="{{ book.title }} cover" 
+       style="width:200px; border-radius:12px; margin-bottom:20px;">
+{% endif %}
+
+<h2 style="margin-top:0">{{ book.title }}</h2>
+<div class="meta">by {{ book.author }}</div>
+<div class="stars">
+  {% for i in range(1, 6) %}
+    {% if i <= book.rating %}
+      ⭐
+    {% else %}
+      ☆
+    {% endif %}
+  {% endfor %}
+</div>
+{% if book.about_author %}
+<hr>
+<h3>About the Author</h3>
+<p>{{ book.about_author }}</p>
+{% endif %}
+
+{% if book.book_summary %}
+<hr>
+<h3>Book Summary</h3>
+<p>{{ book.book_summary }}</p>
+{% endif %}
+
+{% if book.discussion %}
+<hr>
+<h3>Discussion / Thoughts</h3>
+<p>{{ book.discussion }}</p>
+{% endif %}
+
+
+
+<hr class="sep" />
+
+
+
+<p><a href="/edit/{{ book.id }}">✏️ Edit this book</a></p>
+
+<form action="/delete/{{ book.id }}" method="POST" style="margin-top:10px;">
+  <button type="submit" class="delete">🗑 Delete Book</button>
+</form>
+
+<p><a href="/">← Back to all reviews</a></p>
+
+</div>
+{% endblock %}

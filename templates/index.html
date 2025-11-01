@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}BookShelf — Home{% endblock %}
+{% block content %}
+<div class="card">
+<h2 style="margin-top:0">Latest reviews</h2>
+<p><a href="/add" class="button">+ Add a Book</a></p>
+<div></div>
+{% for b in books %}
+<div class="book-row">
+
+  {% if b.image %}
+    <img src="/static/images/{{ b.image }}" alt="{{ b.title }} cover" class="thumb">
+  {% endif %}
+
+  <div class="book-info">
+    <h3><a href="/book/{{ b.id }}">{{ b.title }}</a></h3>
+    <div class="meta">by {{ b.author }}</div>
+    {% if b.summary %}
+      <p class="summary">{{ b.summary }}</p>
+    {% endif %}
+    <span class="badge">Rating: {{ b.rating }}/5</span>
+  </div>
+
+</div>
+<hr>
+{% endfor %}
+
+</div>
+</div>
+{% endblock %}

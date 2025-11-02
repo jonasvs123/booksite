@@ -3,13 +3,19 @@ from datetime import datetime
 import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
+from psycopg2.pool import SimpleConnectionPool
 
+pool = SimpleConnectionPool(
+    1, 10,
+    os.environ["DATABASE_URL"],
+    cursor_factory=RealDictCursor
+)
 
 def get_db_connection():
-    return psycopg2.connect(
-        os.environ["DATABASE_URL"],
-        cursor_factory=RealDictCursor
-    )
+    return pool.getconn()
+
+def release_db(conn):
+    pool.putconn(conn)
 
 
 app = Flask(__name__)
@@ -24,7 +30,7 @@ def get_books():
     cur = conn.cursor()
     cur.execute("SELECT * FROM books ORDER BY id DESC;")
     rows = cur.fetchall()
-    conn.close()
+    release_db(conn)
     return rows
 
 def get_book(book_id):
@@ -32,7 +38,7 @@ def get_book(book_id):
     cur = conn.cursor()
     cur.execute("SELECT * FROM books WHERE id=%s", (book_id,))
     book = cur.fetchone()
-    conn.close()
+    release_db(conn)
     return book
 
 
@@ -94,7 +100,7 @@ def add_book():
 
 
         conn.commit()
-        conn.close()
+        release_db(conn)
 
         return redirect(url_for("index"))
 
@@ -131,7 +137,7 @@ def edit_book(book_id):
             """, (title, author, rating, summary, image, about_author, book_summary, discussion, book_id))
 
         conn.commit()
-        conn.close()
+        release_db(conn)
         return redirect(url_for("index"))
 
     # GET request: load book and show form
@@ -140,7 +146,7 @@ def edit_book(book_id):
     """, (book_id,))
     row = cur.fetchone()
 
-    conn.close()
+    release_db(conn)
 
     if row is None:
         abort(404)
@@ -159,7 +165,7 @@ def delete_book(book_id):
     cur.execute("DELETE FROM books WHERE id=%s", (book_id,))
 
     conn.commit()
-    conn.close()
+    release_db(conn)
 
     return redirect(url_for("index"))
 

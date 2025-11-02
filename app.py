@@ -4,6 +4,11 @@ import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from psycopg2.pool import SimpleConnectionPool
+from markupsafe import Markup
+
+def nl2br(value):
+    return Markup(value.replace("\n", "<br>"))
+
 
 pool = SimpleConnectionPool(
     1, 10,
@@ -21,6 +26,8 @@ def release_db(conn):
 app = Flask(__name__)
 app.secret_key = "b702f2a1c64a21d1e4c2f3fdec16d29b"
 app.jinja_env.globals['now'] = datetime.now
+app.jinja_env.filters["nl2br"] = nl2br
+
 def login_required():
     if not session.get("logged_in"):
         return redirect(url_for("login"))

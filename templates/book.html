@@ -24,20 +24,20 @@
 </div>
 {% if book.about_author %}
 <hr>
-<h3>About the Author</h3>
-<p>{{ book.about_author }}</p>
+<h3>About the author</h3>
+<p>{{ book.about_author | nl2br }}</p>
 {% endif %}
 
 {% if book.book_summary %}
 <hr>
 <h3>Book Summary</h3>
-<p>{{ book.book_summary }}</p>
+<p>{{ book.book_summary | nl2br}}</p>
 {% endif %}
 
 {% if book.discussion %}
 <hr>
 <h3>Discussion / Thoughts</h3>
-<p>{{ book.discussion }}</p>
+<p>{{ book.discussion | nl2br }}</p>
 {% endif %}
 
 

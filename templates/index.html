@@ -3,7 +3,9 @@
 {% block content %}
 <div class="card">
 <h2 style="margin-top:0">Latest reviews</h2>
+{% if session.get("logged_in") %}
 <p><a href="/add" class="button">+ Add a Book</a></p>
+{% endif %}
 <div></div>
 {% for b in books %}
 <div class="book-row">

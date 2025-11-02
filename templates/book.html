@@ -46,11 +46,13 @@
 
 
 
-<p><a href="/edit/{{ book.id }}">✏️ Edit this book</a></p>
+{% if session.get("logged_in") %}
+    <p><a href="/edit/{{ book.id }}">✏️ Edit this book</a></p>
+    <form action="/delete/{{ book.id }}" method="POST" style="margin-top:10px;">
+        <button type="submit" class="delete">🗑 Delete Book</button>
+    </form>
+{% endif %}
 
-<form action="/delete/{{ book.id }}" method="POST" style="margin-top:10px;">
-  <button type="submit" class="delete">🗑 Delete Book</button>
-</form>
 
 <p><a href="/">← Back to all reviews</a></p>
 
